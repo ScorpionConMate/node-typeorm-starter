@@ -1,0 +1,63 @@
+{
+    "compilerOptions": {
+        "module": "commonjs",
+        "esModuleInterop": true,
+        "target": "es6",
+        "noImplicitAny": false,
+        "moduleResolution": "node",
+        "experimentalDecorators": true,
+        "emitDecoratorMetadata": true,
+        "resolveJsonModule": true,
+        "sourceMap": true,
+        "rootDir": "./src",
+        "outDir": "./dist",
+        "baseUrl": "./src",
+        "paths": {
+            "@/*": [
+                "/*"
+            ],
+            "@controllers/*": [
+                "controllers/*"
+            ],
+            "@enums/*": [
+                "enums/*"
+            ],
+            "@interfaces/*": [
+                "interfaces/*"
+            ],
+            "@middlewares/*": [
+                "middlewares/*"
+            ],
+            "@migrations/*": [
+                "migrations/*"
+            ],
+            "@entities/*": [
+                "entities/*"
+            ],
+            "@respositories/*": [
+                "respositories/*"
+            ],
+            "@routes/*": [
+                "routes/*"
+            ],
+            "@services/*": [
+                "services/*"
+            ],
+            "@subscribers/*": [
+                "subscribers/*"
+            ],
+            "@utils/*": [
+                "utils/*"
+            ],
+            "@config/*": [
+                "config/*"
+            ]
+        },
+        "types": [
+            "node"
+        ]
+    },
+    "include": [
+        "./src/**/*"
+    ]
+}
