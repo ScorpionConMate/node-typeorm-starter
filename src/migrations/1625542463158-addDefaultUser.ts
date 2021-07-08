@@ -1,6 +1,6 @@
-import { Roles } from '@enums/Roles.enum';
-import { User } from '@entities/User.entity';
 import { MigrationInterface } from 'typeorm';
+import { User } from '../entities/User.entity';
+import { Roles } from '../enums/Roles.enum';
 
 export class addDefaultUser1625542463158 implements MigrationInterface {
   public async up(): Promise<void> {

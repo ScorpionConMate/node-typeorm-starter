@@ -9,52 +9,10 @@
         "emitDecoratorMetadata": true,
         "resolveJsonModule": true,
         "sourceMap": true,
-        "rootDir": "./src",
+        "rootDir": "./",
         "outDir": "./dist",
-        "baseUrl": "./src",
-        "paths": {
-            "@/*": [
-                "/*"
-            ],
-            "@controllers/*": [
-                "controllers/*"
-            ],
-            "@enums/*": [
-                "enums/*"
-            ],
-            "@interfaces/*": [
-                "interfaces/*"
-            ],
-            "@middlewares/*": [
-                "middlewares/*"
-            ],
-            "@migrations/*": [
-                "migrations/*"
-            ],
-            "@entities/*": [
-                "entities/*"
-            ],
-            "@respositories/*": [
-                "respositories/*"
-            ],
-            "@routes/*": [
-                "routes/*"
-            ],
-            "@services/*": [
-                "services/*"
-            ],
-            "@subscribers/*": [
-                "subscribers/*"
-            ],
-            "@utils/*": [
-                "utils/*"
-            ],
-            "@config/*": [
-                "config/*"
-            ]
-        },
         "types": [
-            "node"
+            "node", "reflect-metadata"
         ]
     },
     "include": [

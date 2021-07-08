@@ -1,15 +1,15 @@
+import { compareSync, genSaltSync, hashSync } from 'bcryptjs';
 import {
-  Entity,
-  PrimaryGeneratedColumn,
+  BaseEntity,
+  BeforeInsert,
   Column,
   CreateDateColumn,
-  BaseEntity,
   DeleteDateColumn,
-  BeforeInsert,
+  Entity,
+  PrimaryGeneratedColumn,
 } from 'typeorm';
-import { compareSync, genSaltSync, hashSync } from 'bcryptjs';
-import { Roles } from '@enums/Roles.enum';
-import { IUserInfo } from '@interfaces/User.interface';
+import { Roles } from '../enums/Roles.enum';
+import { IUserInfo } from '../interfaces/User.interface';
 
 @Entity('user')
 export class User extends BaseEntity {

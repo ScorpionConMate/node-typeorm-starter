@@ -1,6 +1,6 @@
 import * as nodemailer from 'nodemailer';
 import Mail from 'nodemailer/lib/mailer';
-import config from '@config/index';
+import config from '../config/main';
 
 interface SendMailOptions {
   from?: string;
