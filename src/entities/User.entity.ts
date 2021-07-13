@@ -8,8 +8,8 @@ import {
   Entity,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-import { Roles } from '../enums/Roles.enum';
-import { IUserInfo } from '../interfaces/User.interface';
+import { Roles } from '../helpers/enums/Roles.enum';
+import { IUserInfo } from '../helpers/interfaces/User.interface';
 
 @Entity('user')
 export class User extends BaseEntity {
@@ -28,7 +28,7 @@ export class User extends BaseEntity {
   @Column({ type: 'enum', enum: Roles, default: Roles.USER })
   role: Roles;
 
-  @Column({ type: 'varchar', length: 255, select: false })
+  @Column({ type: 'varchar', length: 255 })
   password: string;
 
   @CreateDateColumn({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP(6)' })

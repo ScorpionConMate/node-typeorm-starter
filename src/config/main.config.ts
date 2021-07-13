@@ -13,7 +13,8 @@ export default {
     PASS: process.env.SMPT_PASS,
     PROVIDER: process.env.PROVIDER_MAIL,
   },
-  SECRETS: {
-    JWT: process.env.JWT_KEY,
+  PASSPORT: {
+    SECRET: process.env.JWT_KEY,
+    EXPIRES_IN: '24h',
   },
 };

@@ -1,33 +1,36 @@
 import { Response } from 'express';
-import { inject, injectable } from 'inversify';
-import jwt from 'jsonwebtoken';
-import { config } from '../config/passport.config';
-import TYPES from '../config/types.inversify';
-import { IAuthLoginSuccess } from '../interfaces/ReponsesExamples.interface';
-import { UserRepository } from '../respositories/User.repository';
-import { UserCreate } from '../types/User.type';
+
+import { Service } from 'typedi';
+import { InjectRepository } from 'typeorm-typedi-extensions';
+import Problem from 'api-problem';
+import { IAuthLoginSuccess } from '../helpers/interfaces/ReponsesExamples.interface';
+import { UserRepository } from '../repositories/User.repository';
+import { UserCreate } from '../helpers/types/User.type';
 import { generateServerErrorCode } from '../utils/auth.utils';
 import { errors } from '../utils/error.utils';
+import { signToken } from '../utils/jwt.utils';
+import { User } from '../entities/User.entity';
 
-@injectable()
+@Service()
 export class UserService {
-  private repository: UserRepository;
+  @InjectRepository()
+  private readonly repository: UserRepository;
 
-  constructor(@inject(TYPES.UserRepository) repository: UserRepository) {
-    this.repository = repository;
-  }
-
-  async create(user: UserCreate, res: Response): Promise<void | IAuthLoginSuccess> {
+  async create(user: UserCreate): Promise<void | IAuthLoginSuccess> {
     const exist = await this.repository.exist(user.email);
 
     if (!exist) {
       const userRepository = await this.repository.createUser(user);
       // Sign token
-      const token = jwt.sign({ ...userRepository }, config.passport.secret, {
-        expiresIn: '24h',
-      });
+      const token = signToken(userRepository);
       return { success: true, user: userRepository, token } as IAuthLoginSuccess;
     }
-    return generateServerErrorCode(res, 403, errors.USER.REGISTER_USER_ERROR, errors.USER.USER_EXISTS_ALREADY, 'email');
+    return new Problem(403, errors.USER.USER_EXISTS_ALREADY, {
+      detail: errors.USER.REGISTER_USER_ERROR,
+    });
+  }
+
+  async find(): Promise<User[]> {
+    return this.repository.find();
   }
 }

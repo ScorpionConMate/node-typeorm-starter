@@ -1,13 +1,13 @@
 /* eslint-disable consistent-return */
 import { Strategy, ExtractJwt, StrategyOptions } from 'passport-jwt';
 import { PassportStatic } from 'passport';
-import { config } from '../config/passport.config';
+import cfg from '../config/main.config';
 import { User } from '../entities/User.entity';
 
 export function applyPassportStrategy(passport: PassportStatic): void {
   const options: StrategyOptions = {
     jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-    secretOrKey: config.passport.secret,
+    secretOrKey: cfg.PASSPORT.SECRET,
   };
 
   passport.use(

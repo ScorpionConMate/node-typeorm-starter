@@ -1,6 +1,6 @@
 import * as nodemailer from 'nodemailer';
 import Mail from 'nodemailer/lib/mailer';
-import config from '../config/main';
+import config from '../config/main.config';
 
 interface SendMailOptions {
   from?: string;
@@ -8,6 +8,7 @@ interface SendMailOptions {
   subject: string;
   html: string;
 }
+
 export async function SendMail(options: SendMailOptions): Promise<void> {
   const transporter = nodemailer.createTransport({
     service: config.SMTP.PROVIDER,

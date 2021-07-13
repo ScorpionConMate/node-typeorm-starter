@@ -1,7 +1,7 @@
 import { Response } from 'express';
 import { check, ValidationChain } from 'express-validator';
 import sha256 from 'sha256';
-import { errors } from '../utils/error.utils';
+import { errors } from './error.utils';
 
 export const generateHashedPassword = (password: string): string => sha256(password);
 

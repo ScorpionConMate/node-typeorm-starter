@@ -1,10 +1,12 @@
-import { injectable } from 'inversify';
+import { Service } from 'typedi';
+import { EntityRepository, Repository } from 'typeorm';
 import { User } from '../entities/User.entity';
-import { IUserInfo } from '../interfaces/User.interface';
-import { UserCreate } from '../types/User.type';
+import { IUserInfo } from '../helpers/interfaces/User.interface';
+import { UserCreate } from '../helpers/types/User.type';
 
-@injectable()
-export class UserRepository {
+@Service()
+@EntityRepository(User)
+export class UserRepository extends Repository<User> {
   async createUser({ email, nombre, apellido, password }: UserCreate): Promise<IUserInfo> {
     const user = new User();
     user.email = email;

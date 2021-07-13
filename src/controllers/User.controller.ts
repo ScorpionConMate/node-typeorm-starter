@@ -1,37 +1,33 @@
-import { Request, Response } from 'express';
-import { validationResult } from 'express-validator';
-import { inject } from 'inversify';
-import { interfaces, controller, httpPost, request, response } from 'inversify-express-utils';
-import TYPES from '../config/types.inversify';
+import { Body, Get, JsonController, Post } from 'routing-controllers';
+import { Inject } from 'typedi';
+import Problem from 'api-problem';
+import { User } from '../entities/User.entity';
+import { CreateUserDto } from '../helpers/dto/User.dto';
 import { UserService } from '../services/User.service';
-import { generateServerErrorCode, registerValidation } from '../utils/auth.utils';
 import { errors } from '../utils/error.utils';
+import { IAuthLoginSuccess } from '../helpers/interfaces/ReponsesExamples.interface';
 
-@controller('/user')
-export class UserController implements interfaces.Controller {
+@JsonController('/users')
+export class UserController {
+  @Inject()
   private service: UserService;
 
-  constructor(@inject(TYPES.UserService) service: UserService) {
-    this.service = service;
-  }
-
-  @httpPost('/register', ...registerValidation)
-  async register(@request() req: Request, @response() res: Response): Promise<void> {
-    const errorsAfterValidation = validationResult(req);
-    if (!errorsAfterValidation.isEmpty()) {
-      res.status(400).json({
-        code: 400,
-        errors: errorsAfterValidation.mapped(),
+  @Post('/register')
+  async register(@Body() body: CreateUserDto): Promise<void | IAuthLoginSuccess> {
+    console.log(body);
+    try {
+      const { email, nombre, apellido, password } = body;
+      return await this.service.create({ email, nombre, apellido, password });
+    } catch (e) {
+      throw new Problem(403, errors.USER.USER_EXISTS_ALREADY, {
+        detail: errors.USER.REGISTER_USER_ERROR,
       });
     }
-    try {
-      const { email, nombre, apellido, password } = req.body;
-      const userToReturn = await this.service.create({ email, nombre, apellido, password }, res);
+  }
 
-      res.status(200).json(userToReturn);
-    } catch (e) {
-      console.log(e);
-      generateServerErrorCode(res, 500, e, errors.GENERIC.SOME_THING_WENT_WRONG);
-    }
+  @Get('')
+  async get(): Promise<User[]> {
+    const users = this.service.find();
+    return users;
   }
 }
